@@ -93,7 +93,6 @@ GhostEye 支持多种命令行参数来自定义其行为：
 
 GhostEye内置了对rlwrap的支持，让你在使用反弹Shell时可以使用上下左右键而不会出现乱码：
 
-<details>
 <summary><b>安装和使用rlwrap</b></summary>
 
 ```bash
@@ -120,11 +119,9 @@ rlwrap的优势:
 - 不会因为使用特殊键而导致shell出现乱码
 - 增强了交互式shell的可用性
 
-</details>
 
 ### 📝 示例
 
-<details>
 <summary><b>点击展开使用示例</b></summary>
 
 ```bash
@@ -143,7 +140,6 @@ rlwrap的优势:
 # 显示所有已创建的用户账号信息
 ./ghosteye --show-users
 ```
-</details>
 
 
 ## 📋 使用示例
