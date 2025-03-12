@@ -89,6 +89,38 @@ GhostEye 支持多种命令行参数来自定义其行为：
   -w string      白名单IP地址，多个IP用逗号分隔
   --show-users   显示所有用户账号信息
 ```
+### 🔡 rlwrap增强Shell体验
+
+GhostEye内置了对rlwrap的支持，让你在使用反弹Shell时可以使用上下左右键而不会出现乱码：
+
+<details>
+<summary><b>安装和使用rlwrap</b></summary>
+
+```bash
+# 在Debian/Ubuntu上安装rlwrap
+sudo apt-get install rlwrap
+
+# 在CentOS/RHEL上安装rlwrap
+sudo yum install rlwrap
+```
+
+使用rlwrap接收反弹Shell:
+```bash
+# 使用rlwrap启动nc监听
+rlwrap nc -lvnp [PORT]
+
+# 使用rlwrap与GhostEye
+# GhostEye会自动检测并使用rlwrap，如果它在系统中可用
+```
+
+rlwrap的优势:
+- 支持命令历史记录 (使用上下箭头键)
+- 支持命令行编辑 (使用左右箭头键)
+- Tab键自动补全
+- 不会因为使用特殊键而导致shell出现乱码
+- 增强了交互式shell的可用性
+
+</details>
 
 ### 📝 示例
 
@@ -132,6 +164,8 @@ GhostEye允许您保存常用命令作为模板，极大提高工作效率：
 
 ### 🔄 反弹Shell命令示例
 ![image](https://github.com/user-attachments/assets/980efb2e-bff7-40d7-96b0-7d7d944e378f)
+
+
 
 ---
 
