@@ -41,6 +41,15 @@ build_current() {
     # 检查前端文件
     check_frontend_files || return 1
     
+    # 执行go mod tidy整理依赖
+    echo -e "${BLUE}执行 go mod tidy 整理依赖...${NC}"
+    go mod tidy
+    if [ $? -ne 0 ]; then
+        echo -e "${RED}go mod tidy 执行失败！${NC}"
+        return 1
+    fi
+    echo -e "${GREEN}依赖整理完成。${NC}"
+    
     output_name="GhostEye"
     
     # 如果是Windows，添加.exe后缀
@@ -66,6 +75,15 @@ build_all() {
     
     # 检查前端文件
     check_frontend_files || return 1
+    
+    # 执行go mod tidy整理依赖
+    echo -e "${BLUE}执行 go mod tidy 整理依赖...${NC}"
+    go mod tidy
+    if [ $? -ne 0 ]; then
+        echo -e "${RED}go mod tidy 执行失败！${NC}"
+        return 1
+    fi
+    echo -e "${GREEN}依赖整理完成。${NC}"
     
     # 定义要编译的平台列表
     platforms=("linux/amd64" "linux/386" "linux/arm64" "linux/arm")

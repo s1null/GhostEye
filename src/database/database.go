@@ -5,7 +5,7 @@ import (
 	"fmt"
 	"log"
 	
-	_ "github.com/mattn/go-sqlite3"
+	_ "modernc.org/sqlite"
 )
 
 // 全局数据库连接
@@ -15,7 +15,7 @@ var db *sql.DB
 func InitDatabase() error {
 	var err error
 	// 打开SQLite数据库连接
-	db, err = sql.Open("sqlite3", "./ghosteye.db")
+	db, err = sql.Open("sqlite", "./ghosteye.db")
 	if err != nil {
 		return fmt.Errorf("Failed to open database: %v", err)
 	}

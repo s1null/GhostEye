@@ -3,6 +3,7 @@ package main
 import (
 	"embed"
 	"flag"
+	"fmt"
 	"io/fs"
 	"log"
 	"net/http"
@@ -20,6 +21,17 @@ import (
 
 //go:embed web/out/*
 var webContent embed.FS
+
+// Color constants for terminal output
+const (
+	colorReset  = "\033[0m"
+	colorRed    = "\033[31m"
+	colorGreen  = "\033[32m"
+	colorYellow = "\033[33m"
+	colorBlue   = "\033[34m"
+	colorPurple = "\033[35m"
+	colorCyan   = "\033[36m"
+)
 
 func main() {
 	// 解析命令行参数
@@ -60,6 +72,9 @@ func main() {
 			log.Printf("Failed to add admin account: %v", err)
 		} else {
 			log.Printf("Admin account %s has been added", *username)
+			fmt.Printf("Admin account: %s%s%s, Password: %s%s%s\n", 
+				colorGreen, *username, colorReset, 
+				colorYellow, *password, colorReset)
 		}
 	}
 
@@ -67,8 +82,11 @@ func main() {
 	if *randomUsers > 0 {
 		users := database.GenerateRandomUsers(*randomUsers)
 		log.Printf("Generated %d random users:", len(users))
+		fmt.Printf("%sGenerated %d random users:%s\n", colorBlue, len(users), colorReset)
 		for _, user := range users {
-			log.Printf("Username: %s, Password: %s", user["username"], user["password"])
+			fmt.Printf("Username: %s%s%s, Password: %s%s%s\n", 
+				colorGreen, user["username"], colorReset, 
+				colorYellow, user["password"], colorReset)
 		}
 	}
 
@@ -79,8 +97,11 @@ func main() {
 			log.Printf("Failed to get user list: %v", err)
 		} else {
 			log.Printf("There are %d users in the system:", len(users))
+			fmt.Printf("%sThere are %d users in the system:%s\n", colorPurple, len(users), colorReset)
 			for _, user := range users {
-				log.Printf("Username: %s, Password: %s", user["username"], user["password"])
+				fmt.Printf("Username: %s%s%s, Password: %s%s%s\n", 
+					colorGreen, user["username"], colorReset, 
+					colorYellow, user["password"], colorReset)
 			}
 		}
 	}
@@ -89,11 +110,13 @@ func main() {
 	users, _ := database.GetAllUsers()
 	if len(users) == 0 {
 		defaultUsername := "admin"
-		defaultPassword := "admin"
+		defaultPassword := database.GenerateStrongPassword(16) // 使用强密码
 		if err := database.AddUser(defaultUsername, defaultPassword); err != nil {
 			log.Printf("Failed to add default admin account: %v", err)
 		} else {
-			log.Printf("Default admin account added - Username: %s, Password: %s", defaultUsername, defaultPassword)
+			fmt.Printf("Username: %s%s%s, Password: %s%s%s\n", 
+				colorGreen, defaultUsername, colorReset, 
+				colorYellow, defaultPassword, colorReset)
 		}
 	}
 

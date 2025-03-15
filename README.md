@@ -8,12 +8,12 @@
 
 </div>
 
-> GhostEye 是一个为渗透测试设计的专业Web Shell管理面板，它提供了一个安全、高效的远程终端访问界面，用于管理和控制目标系统。
+> GhostEye 是一个为渗透测试设计的专业Web Shell管理面板。
 
 
 ## 🔍 背景与优势
 
-传统的Shell管理工具存在多种问题，此工具就是为了简化红队人员在渗透测试过程中的繁琐操作而设计：
+传统的ssh工具存在多种问题，此工具就是为了简化红队人员在渗透测试过程中的繁琐操作而设计：
 
 ### ⚠️ 传统工具的局限性
 
@@ -89,10 +89,36 @@ GhostEye 支持多种命令行参数来自定义其行为：
   -w string      白名单IP地址，多个IP用逗号分隔
   --show-users   显示所有用户账号信息
 ```
+### 🔡 rlwrap增强Shell体验
+
+GhostEye使用rlwrap nc进行监听，让你在使用反弹Shell时可以使用上下左右键而不会出现乱码：
+
+<summary><b>安装和使用rlwrap</b></summary>
+
+```bash
+# 在Debian/Ubuntu上安装rlwrap
+sudo apt-get install rlwrap
+
+# 在CentOS/RHEL上安装rlwrap
+sudo yum install rlwrap
+```
+
+使用rlwrap接收反弹Shell:
+```bash
+# 使用rlwrap启动nc监听
+rlwrap nc -lvnp [PORT]
+
+```
+
+rlwrap的优势:
+- 支持命令历史记录 (使用上下箭头键)
+- 支持命令行编辑 (使用左右箭头键)
+- 不会因为使用特殊键而导致shell出现乱码
+- 增强了交互式shell的可用性
+
 
 ### 📝 示例
 
-<details>
 <summary><b>点击展开使用示例</b></summary>
 
 ```bash
@@ -111,7 +137,6 @@ GhostEye 支持多种命令行参数来自定义其行为：
 # 显示所有已创建的用户账号信息
 ./ghosteye --show-users
 ```
-</details>
 
 
 ## 📋 使用示例
@@ -122,13 +147,16 @@ GhostEye允许您保存常用命令作为模板，极大提高工作效率：
 - 在界面中点击"Add Command"按钮
 - 填写命令名称、具体命令内容、命令描述
 - 点击保存
+![image](https://github.com/user-attachments/assets/bbddfdd8-97f4-4d20-bf6e-0fc3b588be8e)
 
 ### 🚀 快速调用
 - 在终端会话中只需点击已保存的命令即可自动填充到输入区
 - 可以先修改再执行，适应不同环境需求
 - 点击base64会自动将输入框的命令转换为`echo ""|base64 -d |bash`
+![image](https://github.com/user-attachments/assets/9774520d-5e3e-40a6-8e9e-0dee4e5574c4)
 
 ### 🔄 反弹Shell命令示例
+![image](https://github.com/user-attachments/assets/980efb2e-bff7-40d7-96b0-7d7d944e378f)
 
 
 
@@ -144,7 +172,7 @@ http://localhost:8080
 
 如果没有指定管理员账号，系统会自动创建默认账号：
 - 用户名: `admin`
-- 密码: `admin`
+- 密码: `随机生成在终端显示`
 
 
 ---
